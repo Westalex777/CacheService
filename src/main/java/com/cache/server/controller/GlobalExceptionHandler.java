@@ -25,13 +25,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> globalExceptionHandler(Exception e) {
-        // Логируем исключение
         log.error(e.getMessage(), e);
-
-        // Формируем ответ с ошибкой
         ErrorResponse response = new ErrorResponse(e.getMessage());
-
-        // Возвращаем ответ с кодом 500 (INTERNAL_SERVER_ERROR)
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
