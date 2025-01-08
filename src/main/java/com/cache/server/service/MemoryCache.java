@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @param <T> the type of values stored in the cache.
  */
-public class MemoryCache<T> implements CacheManager<T> {
+public class MemoryCache<T> implements CacheProvider<T> {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private int capacity = (int) (Runtime.getRuntime().maxMemory() * 0.75f);
     private long lifeTime = 604_800L;

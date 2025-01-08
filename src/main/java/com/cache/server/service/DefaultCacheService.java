@@ -9,8 +9,8 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class DefaultCacheService implements CacheService<Object> {
 
-    private final CacheManager<Object> memoryCache;
-    private final CacheManager<String> dataBaseCache;
+    private final CacheProvider<Object> memoryCache;
+    private final CacheProvider<String> dataBaseCache;
 
     @Override
     public Mono<Void> set(String key1, String key2, Object value) {

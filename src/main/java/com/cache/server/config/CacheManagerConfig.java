@@ -1,6 +1,6 @@
 package com.cache.server.config;
 
-import com.cache.server.service.CacheManager;
+import com.cache.server.service.CacheProvider;
 import com.cache.server.service.MemoryCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ public class CacheManagerConfig {
     private final CacheProperties cacheProperties;
 
     @Bean
-    public CacheManager<Object> memoryCache() {
+    public CacheProvider<Object> memoryCache() {
         MemoryCache<Object> memoryCache = new MemoryCache<>();
         var propertiesMemory = cacheProperties.getMemory();
         if (propertiesMemory.getCapacity() != null) {

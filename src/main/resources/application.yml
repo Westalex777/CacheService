@@ -44,3 +44,8 @@ cache:
     scheduled:
       enable: false
       cleaner-crone: 0/1 * * * * ?
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topic-name: test_topic
+  group-id: cache-synchronization

@@ -2,7 +2,7 @@ package com.cache.server.component;
 
 import com.cache.server.repository.CacheEntity;
 import com.cache.server.repository.CacheRepository;
-import com.cache.server.service.CacheManager;
+import com.cache.server.service.CacheProvider;
 import com.cache.server.service.MemoryCache;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import java.util.List;
 public class MemoryCacheInitializationTest {
 
     @Autowired
-    private CacheManager<Object> memoryCache;
+    private CacheProvider<Object> memoryCache;
 
     @Autowired
     private MemoryCacheInitialization memoryCacheInitialization;

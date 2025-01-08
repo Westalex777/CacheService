@@ -1,7 +1,8 @@
 package com.cache.server.component;
 
 import com.cache.server.repository.CacheEntity;
-import com.cache.server.service.CacheManager;
+import com.cache.server.repository.CacheRepository;
+import com.cache.server.service.CacheProvider;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,15 +28,9 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class MemoryCacheInitialization {
 
-    /**
-     * JPA EntityManager used for interacting with the database.
-     */
     private final EntityManager entityManager;
-
-    /**
-     * CacheManager instance for storing entities in the in-memory cache.
-     */
-    private final CacheManager<Object> memoryCache;
+    private final CacheProvider<Object> memoryCache;
+    private final CacheRepository cacheRepository;
 
     /**
      * Initializes the in-memory cache by loading entities from the database.
@@ -49,13 +44,14 @@ public class MemoryCacheInitialization {
      * The number of successfully loaded and skipped (expired) entities is logged.
      */
     @Scheduled(initialDelay = 1000)
-    @Transactional(readOnly = true)
+    @Transactional
     public void init() {
         boolean retry;
         int countRetry = 0;
         do {
             try {
                 log.info("Initializing cache {}", countRetry > 0 ? "Retrying " + countRetry : "");
+                cacheRepository.deleteDuplicateEntries();
                 AtomicInteger loadCount = new AtomicInteger(0);
                 AtomicInteger expiredCount = new AtomicInteger(0);
                 Session session = entityManager.unwrap(Session.class);

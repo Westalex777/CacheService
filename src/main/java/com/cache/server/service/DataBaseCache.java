@@ -4,7 +4,6 @@ import com.cache.server.config.CacheProperties;
 import com.cache.server.repository.CacheEntity;
 import com.cache.server.repository.CacheRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Service
-public class DataBaseCache implements CacheManager<String> {
+public class DataBaseCache implements CacheProvider<String> {
 
     private final long lifeTime;
     private final CacheRepository cacheRepository;
@@ -32,17 +31,8 @@ public class DataBaseCache implements CacheManager<String> {
     @Transactional
     public boolean set(String key1, String key2, String value, Long lifeTime) {
         log.info("Setting value: key1={}, key2={}, lifeTime={} seconds", key1, key2, lifeTime);
-        try {
-            var count = cacheRepository.countAllByPrimaryCacheKeyAndSecondaryCacheKey(key1, key2);
-            if (count > 0) {
-                remove(key1, key2);
-            }
-            cacheRepository.save(cacheEntityBuild(key1, key2, value, lifeTime));
-            return true;
-        } catch (DataAccessException e) {
-            log.error(e.getMessage());
-            return false;
-        }
+        cacheRepository.save(cacheEntityBuild(key1, key2, value, lifeTime));
+        return true;
     }
 
     @Override

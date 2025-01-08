@@ -11,10 +11,10 @@ public class ThreadPoolTaskSchedulerConfig {
 
     @Bean
     public ThreadPoolTaskScheduler taskScheduler() {
-        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(2);
-        scheduler.setThreadNamePrefix("Scheduler-");
-        scheduler.initialize();
-        return scheduler;
+        ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+        threadPoolTaskScheduler.setPoolSize(20);
+        threadPoolTaskScheduler.setThreadNamePrefix("Scheduler-");
+        threadPoolTaskScheduler.initialize();
+        return threadPoolTaskScheduler;
     }
 }
