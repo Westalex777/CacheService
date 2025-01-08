@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: admin
+      changes:
+
+        - createSequence:
+            sequenceName: cache_entry_id_seq
+            startValue: 1
+            incrementBy: 1
+
+        - createTable:
+            tableName: cache_entry
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: primary_cache_key
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: secondary_cache_key
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expired
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

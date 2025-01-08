@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    default: test
+  application:
+    name: cache-server
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  liquibase:
+    enabled: false
+    change-log: classpath:db/changelog/db.changelog-master.yml
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_schema: public
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+
+cache:
+  default-life-time: 3600
+  memory:
+    capacity: 512
+    threshold-gc: 200
+    threshold-permission-active: 5
+    self-cleaner:
+      initial-delay: 3600
+      period: 3600
+  db:
+    scheduled:
+      enable: true
+      cleaner-crone: 0/1 * * * * ?

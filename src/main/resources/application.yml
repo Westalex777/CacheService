@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cache-server
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+  liquibase:
+    enabled: false
+    change-log: classpath:db/changelog/db.changelog-master.yml
+    default-schema: public
+    url: jdbc:postgresql://localhost:5432/postgres
+    user: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    liquibase-schema: PUBLIC
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: PUBLIC
+        show_sql: false
+
+cache:
+#  default-life-time: 3600
+  memory:
+    capacity: 512
+    threshold-gc: 200
+    threshold-permission-active: 5
+    self-cleaner:
+      initial-delay: 3600
+      period: 3600
+  db:
+    scheduled:
+      enable: false
+      cleaner-crone: 0/1 * * * * ?
